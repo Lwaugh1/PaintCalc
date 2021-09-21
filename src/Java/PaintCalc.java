@@ -1,17 +1,16 @@
 package Java;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PaintCalc {
 
-    static void paint(double width, double length, double height, int windows, int doors, int coats, String userInput, int n) {
+    static void paint(double width, double length, double height, int windows, int doors, int coats, String userInput, int coverage) {
         switch (userInput) {
             case "wall":
                 double A = height * length;
                 double windowsArea = 0.6 * 0.63 * windows;
                 double doorsArea = 1.981 * 0.762 * doors;
-                double paint = coats * (A - windowsArea - doorsArea) / 14;
+                double paint = coats * (A - windowsArea - doorsArea) / coverage;
                 paint = Math.round(paint);
                 System.out.println("Paint Required");
                 System.out.println(paint + " " + "litres");
@@ -22,7 +21,7 @@ public class PaintCalc {
                 A = P * height;
                 windowsArea = 0.6 * 0.63 * windows;
                 doorsArea = 1.981 * 0.762 * doors;
-                paint = coats * (A - windowsArea - doorsArea) / 14;
+                paint = coats * (A - windowsArea - doorsArea) / coverage;
                 paint = Math.round(paint);
                 System.out.println("Paint Required");
                 System.out.println(paint + " " + "litres");
@@ -32,8 +31,26 @@ public class PaintCalc {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("room or wall?");
+        int[] colours = {14, 7, 2, 30};
+        int coverage = 0;
+        System.out.println("blue, red, white or yellow?");
         String userInput = scan.nextLine();
+        switch (userInput) {
+            case "blue":
+                coverage = colours[0];
+                break;
+            case "red":
+                coverage = colours[1];
+                break;
+            case "white":
+                coverage = colours[2];
+                break;
+            case "yellow":
+                coverage = colours[3];
+                break;
+        }
+        System.out.println("room or wall?");
+        userInput = scan.nextLine();
         switch (userInput) {
             case "room":
                 System.out.println("regular or irregular room?");
@@ -52,8 +69,9 @@ public class PaintCalc {
                         int windows = scan.nextInt();
                         System.out.println("How many Doors?");
                         int doors = scan.nextInt();
-                        paint(width, length, height, windows, doors, coats, userInput, 0);
+                        paint(width, length, height, windows, doors, coats, userInput, coverage);
                         break;
+
                     case "irregular":
                         height = 0;
                         width = 0;
@@ -61,10 +79,10 @@ public class PaintCalc {
                         windows = 0;
                         doors =0;
                         double total = 0;
-                        System.out.println("How many Walls?");
-                        int n = scan.nextInt();
                         System.out.println("Number of Coats?");
                         coats = scan.nextInt();
+                        System.out.println("How many Walls?");
+                        int n = scan.nextInt();
                         for(int i = 1; i <= n; i++) {
                             System.out.println("Height of Wall" + " " + i + "(m)?");
                             height = scan.nextDouble();
@@ -77,12 +95,12 @@ public class PaintCalc {
                             double A = height * length;
                             double windowsArea = 0.6 * 0.63 * windows;
                             double doorsArea = 1.981 * 0.762 * doors;
-                            double paint = coats * (A - windowsArea - doorsArea) / 14;
+                            double paint = coats * (A - windowsArea - doorsArea) / coverage;
                             total = total + paint;
                             }
                             System.out.println("Paint Required");
                             System.out.println(Math.round(total) + " " + "litres");
-                        paint(width, length, height, windows, doors, coats, userInput, n);
+                        paint(width, length, height, windows, doors, coats, userInput, coverage);
                         break;
                 }
                 break;
@@ -97,7 +115,7 @@ public class PaintCalc {
                 int windows = scan.nextInt();
                 System.out.println("How many Doors?");
                 int doors = scan.nextInt();
-                paint(0, length, height, windows, doors, coats, userInput, 0);
+                paint(0, length, height, windows, doors, coats, userInput, coverage);
                 break;
         }
     }

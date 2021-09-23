@@ -7,8 +7,6 @@ public class Paint {
     private String colour;
     private int coverage;
 
-
-
     /////////////////////////////////////Constructors//////////////////////////////////////////
 
     public Paint(String colour, int coverage){

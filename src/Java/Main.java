@@ -3,13 +3,13 @@ package Java;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         double totalArea = 0;
+        double ceilArea = 0;
         int coverage =0;
         Scanner scan = new Scanner(System.in);
 
@@ -69,10 +69,26 @@ public class Main {
             totalArea = totalArea + calcWall(length, height, windows, doors);
         }
         System.out.println(totalArea);
+
+        System.out.println("Are you painting the ceiling?");
+        String ceil = scan.next();
+        switch (ceil){
+            case "Yes" :
+            System.out.println("Length of ceiling (m) ?");
+            double length = scan.nextDouble();
+            System.out.println("Width of ceiling (m) ?");
+            double height = scan.nextDouble();
+            ceilArea = calcWall(length, height, 0, 0);
+                break;
+
+            case "No" :
+                break;
+        }
+        System.out.println(ceilArea);
         System.out.println("How many coats of paint?");
         int coats = scan.nextInt();
         System.out.println("Paint Required");
-        System.out.println(paintArea(totalArea, coats, coverage) + " litres");
+        System.out.println(paintArea(totalArea + ceilArea, coats, coverage) + " litres");
     }
 
     public static double calcWall(double length, double height, int windows, int doors) {
